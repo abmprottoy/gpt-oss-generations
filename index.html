@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Simple To‑Do App</title>
+<style>
+  body{font-family:Arial,Helvetica,sans-serif;margin:2rem;background:#f9f9f9;}
+  h1{margin-bottom:1rem;}
+  form{display:flex;gap:.5rem;margin-bottom:1rem;}
+  input[type=text]{flex:1;padding:.5rem;border:1px solid #ccc;border-radius:4px;}
+  button{padding:.5rem 1rem;border:none;background:#28a745;color:#fff;border-radius:4px;}
+  button:hover{background:#218838;}
+  ul{list-style:none;padding:0;}
+  li{display:flex;align-items:center;gap:.5rem;background:#fff;padding:.75rem;border-radius:4px;margin-bottom:.5rem;}
+  li.completed span{text-decoration:line-through;color:#777;}
+  li button{background:#dc3545;color:#fff;border:none;padding:.25rem .5rem;border-radius:4px;}
+  li button:hover{background:#c82333;}
+</style>
+</head>
+<body>
+<h1>To‑Do List</h1>
+<form id="addForm">
+  <input type="text" id="newTask" placeholder="What needs to be done?" required autocomplete="off">
+  <button type="submit">Add</button>
+</form>
+<ul id="todoList"></ul>
+
+<script>
+  /* ---------------  Helper --------------- */
+  const el = id => document.getElementById(id);
+
+  /* ---------------  Main --------------- */
+  const todoList = el('todoList');
+  const newTaskInput = el('newTask');
+  const addForm = el('addForm');
+
+  // Load any persisted tasks from localStorage
+  const loadTasks = () => {
+    const stored = localStorage.getItem('todoTasks');
+    return stored ? JSON.parse(stored) : [];
+  };
+
+  // Persist tasks to localStorage
+  const saveTasks = (tasks) => localStorage.setItem('todoTasks', JSON.stringify(tasks));
+
+  // Render the entire list
+  const render = () => {
+    const tasks = loadTasks();
+    todoList.innerHTML = '';                     // Clear current UI
+    tasks.forEach((t, i) => {
+      const li = document.createElement('li');
+      li.className = t.completed ? 'completed' : '';
+      const span = document.createElement('span');
+      span.textContent = t.text;
+      span.onclick = () => toggle(i);
+      const delBtn = document.createElement('button');
+      delBtn.textContent = '✕';
+      delBtn.onclick = () => remove(i);
+      li.append(span, delBtn);
+      todoList.append(li);
+    });
+  };
+
+  // Add a new task
+  const add = (e) => {
+    e.preventDefault();
+    const text = newTaskInput.value.trim();
+    if (!text) return;
+    const tasks = loadTasks();
+    tasks.push({ text, completed: false });
+    saveTasks(tasks);
+    newTaskInput.value = '';
+    render();
+  };
+
+  // Toggle completed status
+  const toggle = (index) => {
+    const tasks = loadTasks();
+    tasks[index].completed = !tasks[index].completed;
+    saveTasks(tasks);
+    render();
+  };
+
+  // Remove a task
+  const remove = (index) => {
+    const tasks = loadTasks();
+    tasks.splice(index, 1);
+    saveTasks(tasks);
+    render();
+  };
+
+  // Wire up the form
+  addForm.addEventListener('submit', add);
+
+  // Initial render
+  render();
+</script>
+</body>
+</html>
