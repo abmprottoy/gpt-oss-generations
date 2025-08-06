@@ -2,7 +2,7 @@
 Hi there!
 
 
-> [!Thought for 7.0 seconds.]
+> Thought for 7.0 seconds.  
 > The user says "Hi there!" We need to respond in a friendly tone. There's no specific request. Probably a simple greeting. Should ask how we can help.
 
 **Assistant's Response:**  
@@ -14,7 +14,7 @@ Hello! 👋 How can I assist you today?
 Build me a simple to-do app with plain html and js please.
 
  
-> [!Thought for 27.6 seconds.]
+> Thought for 27.6 seconds.  
 > The user wants a simple to-do app with plain HTML and JS. We should provide a minimal example: an index.html with basic structure, CSS maybe inline or style, and JavaScript handling adding tasks, toggling completed, deleting. Since they want plain html and js, no frameworks. Provide code snippet with explanation. Also maybe mention that it's minimal and can be extended. Provide full code. Probably ask if they'd like to store in local storage. But keep it simple. Provide instructions to run: open file in browser. Also maybe show how to create index.html and script in separate file or inline. Provide code. That is fine.
 
 
